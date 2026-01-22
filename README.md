@@ -9,6 +9,7 @@ Personal [Homebrew](https://brew.sh) tap for [Aaron Bassett's](https://github.co
 
 | Formula | Repository | Version | Updated |
 |---------|------------|---------|---------|
+| [paneful](Formula/paneful.rb) | [aaronbassett/paneful](https://github.com/aaronbassett/paneful) | 0.1.2 | 2026-01-22 |
 
 ## Usage
 
