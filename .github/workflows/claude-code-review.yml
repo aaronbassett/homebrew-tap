@@ -95,9 +95,10 @@ jobs:
             - Do NOT merge
 
             **If this is a NEW formula (no previous version) OR a MAJOR version increase, and review passed:**
-            - Approve the PR using: `gh pr review <number> --approve --body "message"`
-            - Include a summary of what was reviewed in the approval message
-            - Tag @aaronbassett for visibility
+            - Approve the PR using: `gh pr review <number> --approve`
+            - Add a summary comment using: `gh pr comment <number> --body "message"`
+            - Include what was reviewed in the comment body
+            - Tag @aaronbassett in the comment for visibility
             - Do NOT auto-merge (requires human to merge)
 
             **If this is a MINOR or PATCH version update AND review passed:**
