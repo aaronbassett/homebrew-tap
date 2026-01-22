@@ -2,18 +2,26 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review, reopened, labeled]
-    paths:
-      - "Formula/*.rb"
-      - "README.md"
+    types: [opened, synchronize, ready_for_review, reopened]
+    # Optional: Only run on specific file changes
+    # paths:
+    #   - "src/**/*.ts"
+    #   - "src/**/*.tsx"
+    #   - "src/**/*.js"
+    #   - "src/**/*.jsx"
 
 jobs:
   claude-review:
-    if: contains(github.event.pull_request.labels.*.name, 'formula')
+    # Optional: Filter by PR author
+    # if: |
+    #   github.event.pull_request.user.login == 'external-contributor' ||
+    #   github.event.pull_request.user.login == 'new-developer' ||
+    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
+
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
+      pull-requests: read
       issues: read
       id-token: write
 
@@ -21,85 +29,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Get PR metadata
-        id: metadata
-        run: |
-          echo "files=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path' | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
-          echo "today=$(date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
-          echo "yesterday=$(date -d 'yesterday' +%Y-%m-%d 2>/dev/null || date -v-1d +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
-        env:
-          GH_TOKEN: ${{ github.token }}
+          fetch-depth: 1
 
       - name: Run Claude Code Review
         id: claude-review
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: |
-            You are reviewing a Homebrew formula PR for the aaronbassett/homebrew-tap repository.
+          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
+          plugins: 'code-review@claude-code-plugins'
+          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://code.claude.com/docs/en/cli-reference for available options
 
-            PR: ${{ github.repository }}/pull/${{ github.event.pull_request.number }}
-            Changed files: ${{ steps.metadata.outputs.files }}
-            Today's date: ${{ steps.metadata.outputs.today }}
-            Yesterday's date: ${{ steps.metadata.outputs.yesterday }}
-
-            ## Review Checklist
-
-            ### 1. Formula Validation (Formula/*.rb files)
-
-            For each formula file, verify:
-            - [ ] Valid Ruby syntax
-            - [ ] Has `desc` with meaningful description
-            - [ ] Has `homepage` pointing to valid URL
-            - [ ] Has `version` in semantic versioning format (X.Y.Z)
-            - [ ] Has `license` declaration
-            - [ ] Download URLs point to valid GitHub release assets
-            - [ ] sha256 values are 64 character hex strings
-            - [ ] Has `livecheck` block
-            - [ ] Has `install` method
-            - [ ] Has `test` block
-            - [ ] If `caveats` exists: verify the message is clear, helpful, and makes sense
-
-            ### 2. README Validation
-
-            Compare the README.md changes:
-            - [ ] Only the formula table row was modified (no other content changed)
-            - [ ] Table structure is preserved (header and separator intact)
-            - [ ] If updating existing row: only that row changed
-            - [ ] If adding new row: row is properly formatted
-
-            ### 3. Table Row Validation
-
-            For the formula row in the table:
-            - [ ] Formula link format: `[name](Formula/name.rb)`
-            - [ ] Formula link points to existing file in this PR
-            - [ ] Repository link format: `[owner/repo](https://github.com/owner/repo)`
-            - [ ] Version matches the version in the formula file exactly
-            - [ ] Updated date is in YYYY-MM-DD format
-            - [ ] Updated date is today (${{ steps.metadata.outputs.today }}) or yesterday (${{ steps.metadata.outputs.yesterday }})
-
-            ## Determine Version Change Type
-
-            If this is updating an existing formula:
-            1. Get the previous version from the base branch
-            2. Compare with new version to determine: major, minor, or patch change
-
-            ## Actions Based on Review
-
-            **If you find ANY issues:**
-            - Request changes on the PR using: `gh pr review <number> --request-changes --body "message"`
-            - Describe all issues found in the review body
-            - Tag @aaronbassett in the message
-            - Do NOT merge
-
-            **If this is a NEW formula (no previous version) OR a MAJOR version increase, and review passed:**
-            - Approve the PR using: `gh pr review <number> --approve --body "message"`
-            - Include a summary of what was reviewed in the approval message
-            - Tag @aaronbassett for visibility
-            - Do NOT auto-merge (requires human to merge)
-
-            **If this is a MINOR or PATCH version update AND review passed:**
-            - Approve the PR using: `gh pr review <number> --approve`
-            - Merge the PR using: `gh pr merge <number> --merge --delete-branch`
