@@ -1,18 +1,18 @@
 class Gauge < Formula
   desc "Gauge client: authenticated query access, a terminal dashboard (TUI), and an MCP server for privacy-first developer telemetry."
   homepage "https://github.com/aaronbassett/gauge"
-  version "0.3.0"
+  version "0.3.1"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/aaronbassett/gauge/releases/download/v0.3.0/gauge-client-aarch64-apple-darwin.tar.xz"
+      url "https://github.com/aaronbassett/gauge/releases/download/v0.3.1/gauge-client-aarch64-apple-darwin.tar.xz"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/aaronbassett/gauge/releases/download/v0.3.0/gauge-client-aarch64-unknown-linux-gnu.tar.xz"
+      url "https://github.com/aaronbassett/gauge/releases/download/v0.3.1/gauge-client-aarch64-unknown-linux-gnu.tar.xz"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/aaronbassett/gauge/releases/download/v0.3.0/gauge-client-x86_64-unknown-linux-gnu.tar.xz"
+      url "https://github.com/aaronbassett/gauge/releases/download/v0.3.1/gauge-client-x86_64-unknown-linux-gnu.tar.xz"
     end
   end
   license any_of: ["MIT", "Apache-2.0"]
