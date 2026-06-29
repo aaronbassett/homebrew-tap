@@ -1,25 +1,25 @@
 class Rover < Formula
   desc "An MCP server for fetching and prepping web content for LLM agents."
   homepage "https://github.com/aaronbassett/rover"
-  version "0.3.2"
+  version "0.4.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/aaronbassett/rover/releases/download/v0.3.2/rover-fetch-aarch64-apple-darwin.tar.xz"
-      sha256 "6cfa4eb1abba0608be8150717e80c30f1e29624bf312a3c87e2f9c4d85004536"
+      url "https://github.com/aaronbassett/rover/releases/download/v0.4.0/rover-fetch-aarch64-apple-darwin.tar.xz"
+      sha256 "f203eca0362e286fb0dea3e7e1aac0c6e68aee19340e500cdf79d8d21b2d535b"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/aaronbassett/rover/releases/download/v0.3.2/rover-fetch-x86_64-apple-darwin.tar.xz"
-      sha256 "2fe28b28a84ee640a92043d0d34fe8db26c378087baf53c0b519bf85fe556157"
+      url "https://github.com/aaronbassett/rover/releases/download/v0.4.0/rover-fetch-x86_64-apple-darwin.tar.xz"
+      sha256 "ea718ffe0d18e00a9a965c9cba061c9f5b06f09da65bdcd63b5063c23a6db794"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/aaronbassett/rover/releases/download/v0.3.2/rover-fetch-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "6cd8d18488722ed3babe4f27cf944db2786b39696530e78769cee758bd6100b4"
+      url "https://github.com/aaronbassett/rover/releases/download/v0.4.0/rover-fetch-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "67c5f5625d8f2c1fa4af79698eb865f7b5d38a41617b5cd5e35b9ec03142d509"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/aaronbassett/rover/releases/download/v0.3.2/rover-fetch-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "d4d0c83be1a85b117ceb3d61bc3788f5cffc1ffa6dbd8c50d158594c810abba1"
+      url "https://github.com/aaronbassett/rover/releases/download/v0.4.0/rover-fetch-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "c7c9ebdeac6f26a916f7b66fa4b10e0a853704d2b5e2544ee7e3a0710cf42889"
     end
   end
   license any_of: ["MIT", "Apache-2.0"]
