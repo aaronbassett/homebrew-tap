@@ -1,18 +1,18 @@
 class Tome < Formula
   desc "Cross-harness plugin catalog manager for AI coding assistants."
   homepage "https://tome-mcp.netlify.app/"
-  version "0.7.10"
+  version "0.7.11"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/devrelaicom/tome/releases/download/v0.7.10/tome-mcp-aarch64-apple-darwin.tar.xz"
+      url "https://github.com/devrelaicom/tome/releases/download/v0.7.11/tome-mcp-aarch64-apple-darwin.tar.xz"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/devrelaicom/tome/releases/download/v0.7.10/tome-mcp-aarch64-unknown-linux-gnu.tar.xz"
+      url "https://github.com/devrelaicom/tome/releases/download/v0.7.11/tome-mcp-aarch64-unknown-linux-gnu.tar.xz"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/devrelaicom/tome/releases/download/v0.7.10/tome-mcp-x86_64-unknown-linux-gnu.tar.xz"
+      url "https://github.com/devrelaicom/tome/releases/download/v0.7.11/tome-mcp-x86_64-unknown-linux-gnu.tar.xz"
     end
   end
   license any_of: ["MIT", "Apache-2.0"]
