@@ -1,18 +1,18 @@
 class MidnightManual < Formula
   desc "midnight-manual CLI binary (also installed as `mnm`); exposes `mcp serve` subcommand."
   homepage "https://midnight.network"
-  version "0.6.1"
+  version "0.7.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/devrelaicom/midnight-manual/releases/download/v0.6.1/midnight-manual-aarch64-apple-darwin.tar.xz"
+      url "https://github.com/devrelaicom/midnight-manual/releases/download/v0.7.0/midnight-manual-aarch64-apple-darwin.tar.xz"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/devrelaicom/midnight-manual/releases/download/v0.6.1/midnight-manual-aarch64-unknown-linux-gnu.tar.xz"
+      url "https://github.com/devrelaicom/midnight-manual/releases/download/v0.7.0/midnight-manual-aarch64-unknown-linux-gnu.tar.xz"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/devrelaicom/midnight-manual/releases/download/v0.6.1/midnight-manual-x86_64-unknown-linux-gnu.tar.xz"
+      url "https://github.com/devrelaicom/midnight-manual/releases/download/v0.7.0/midnight-manual-x86_64-unknown-linux-gnu.tar.xz"
     end
   end
   license any_of: ["Apache-2.0", "MIT"]
